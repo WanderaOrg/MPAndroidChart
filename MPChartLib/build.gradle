@@ -1,7 +1,11 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven'
+apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'maven-publish'
 //apply plugin: 'com.github.dcendents.android-maven'
 //apply plugin: 'realm-android'
+
+def packageName = 'com.wandera.android'
 
 android {
     compileSdkVersion 27
@@ -12,7 +16,8 @@ android {
         minSdkVersion 9
         targetSdkVersion 27
         versionCode 3
-        versionName '3.0.3'
+        version '3.0.3.1'
+        archivesBaseName = "MPAndroidChart"
     }
     buildTypes {
         release {
@@ -25,6 +30,18 @@ android {
     }
     testOptions {
         unitTests.returnDefaultValues = true // this prevents "not mocked" error
+    }
+
+    libraryVariants.all { variant ->
+        println "variant: " + variant.baseName
+        variant.outputs.all { output ->
+            if (outputFile != null && outputFileName.endsWith('.aar')) {
+                // LibraryVariant object does not have #versionNameSuffix
+                def suffix = variant.baseName == "debug" ? "-SNAPSHOT" : ""
+                outputFileName = "${archivesBaseName}-${version}${suffix}.aar"
+                println "outputFileName: " + outputFileName
+            }
+        }
     }
 }
 
@@ -56,7 +73,7 @@ task sourcesJar(type: Jar) {
 
 task javadoc(type: Javadoc) {
     options.charSet = 'UTF-8'
-    failOnError  false
+    failOnError false
     source = android.sourceSets.main.java.sourceFiles
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }
@@ -69,4 +86,26 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 artifacts {
     archives sourcesJar
     archives javadocJar
+}
+
+publishing {
+    repositories {
+        maven {
+            credentials {
+                username "${artifactory_user}"
+                password "${artifactory_password}"
+            }
+            url "${artifactory_contextUrl}/libs-release-local"
+        }
+    }
+    publications {
+        aar(MavenPublication) {
+            groupId = packageName
+            artifactId = archivesBaseName
+            def targetFile = "$buildDir/outputs/aar/${archivesBaseName}-${version}.aar"
+            println "publishing: " + targetFile
+            // Tell maven to prepare the generated "*.aar" file for publishing
+            artifact(targetFile)
+        }
+    }
 }
