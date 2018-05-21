@@ -143,9 +143,19 @@ public abstract class AxisBase extends ComponentBase {
     public float mAxisMaximum = 0f;
 
     /**
+     * base value from which the actual one is being calculated
+     */
+    protected float mAxisMaximumBase = 0f;
+
+    /**
      * don't touch this directly, use setter
      */
     public float mAxisMinimum = 0f;
+
+    /**
+     * base value from which the actual one is being calculated
+     */
+    protected float mAxisMinimumBase = 0f;
 
     /**
      * the total range of values this axis covers
@@ -684,6 +694,7 @@ public abstract class AxisBase extends ComponentBase {
     public void setAxisMinimum(float min) {
         mCustomAxisMin = true;
         mAxisMinimum = min;
+        mAxisMinimumBase = min;
         this.mAxisRange = Math.abs(mAxisMaximum - min);
     }
 
@@ -707,6 +718,7 @@ public abstract class AxisBase extends ComponentBase {
     public void setAxisMaximum(float max) {
         mCustomAxisMax = true;
         mAxisMaximum = max;
+        mAxisMaximumBase = max;
         this.mAxisRange = Math.abs(max - mAxisMinimum);
     }
 

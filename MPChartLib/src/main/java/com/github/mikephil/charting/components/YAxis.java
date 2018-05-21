@@ -405,17 +405,17 @@ public class YAxis extends AxisBase {
         // if custom, use value as is, else use data value
         if( mCustomAxisMin ) {
             if( mUseAutoScaleRestrictionMin ) {
-                min = Math.min( dataMin, mAxisMinimum );
+                min = Math.min(dataMin, mAxisMinimumBase);
             } else {
-                min = mAxisMinimum;
+                min = mAxisMinimumBase;
             }
         }
 
         if( mCustomAxisMax ) {
             if( mUseAutoScaleRestrictionMax ) {
-                max = Math.max( max, mAxisMaximum );
+                max = Math.max(max, mAxisMaximumBase);
             } else {
-                max = mAxisMaximum;
+                max = mAxisMaximumBase;
             }
         }
 
