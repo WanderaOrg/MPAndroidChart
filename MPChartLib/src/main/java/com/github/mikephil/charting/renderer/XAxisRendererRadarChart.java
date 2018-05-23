@@ -2,7 +2,6 @@
 package com.github.mikephil.charting.renderer;
 
 import android.graphics.Canvas;
-import android.graphics.PointF;
 
 import com.github.mikephil.charting.charts.RadarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -43,7 +42,8 @@ public class XAxisRendererRadarChart extends XAxisRenderer {
         MPPointF pOut = MPPointF.getInstance(0,0);
         for (int i = 0; i < mChart.getData().getMaxEntryCountSet().getEntryCount(); i++) {
 
-            String label = mXAxis.getValueFormatter().getFormattedValue(i, mXAxis);
+            String label = mXAxis.getValueFormatter().getFormattedValue(
+                    i, mXAxis, mChart.getData().getMaxEntryCountSet().getEntryCount(), i);
 
             float angle = (sliceangle * i + mChart.getRotationAngle()) % 360f;
 

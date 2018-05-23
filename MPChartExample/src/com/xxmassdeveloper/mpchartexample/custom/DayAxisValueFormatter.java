@@ -21,7 +21,7 @@ public class DayAxisValueFormatter implements IAxisValueFormatter
     }
 
     @Override
-    public String getFormattedValue(float value, AxisBase axis) {
+    public String getFormattedValue(float value, AxisBase axis, int valuesTotal, int valueIndex) {
 
         int days = (int) value;
 

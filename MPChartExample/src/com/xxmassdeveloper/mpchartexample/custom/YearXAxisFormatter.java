@@ -19,7 +19,7 @@ public class YearXAxisFormatter implements IAxisValueFormatter
     }
 
     @Override
-    public String getFormattedValue(float value, AxisBase axis) {
+    public String getFormattedValue(float value, AxisBase axis, int valuesTotal, int valueIndex) {
 
         float percent = value / axis.mAxisRange;
         return mMonths[(int) (mMonths.length * percent)];

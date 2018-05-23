@@ -49,7 +49,7 @@ public class LargeValueFormatter implements IValueFormatter, IAxisValueFormatter
 
     // IAxisValueFormatter
     @Override
-    public String getFormattedValue(float value, AxisBase axis) {
+    public String getFormattedValue(float value, AxisBase axis, int valuesTotal, int valueIndex) {
         return makePretty(value) + mText;
     }
 

@@ -87,7 +87,7 @@ public class RealmWikiExample extends RealmBaseActivity {
 
         IAxisValueFormatter formatter = new IAxisValueFormatter() {
             @Override
-            public String getFormattedValue(float value, AxisBase axis) {
+            public String getFormattedValue(float value, AxisBase axis, int valuesTotal, int valueIndex) {
                 return results.get((int) value).getPlayerName();
             }
         };
