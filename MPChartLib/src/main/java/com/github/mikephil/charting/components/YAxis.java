@@ -16,7 +16,7 @@ import com.github.mikephil.charting.utils.Utils;
  *
  * @author Philipp Jahoda
  */
-public class YAxis extends AxisBase {
+public class YAxis extends AxisBase implements DrawingCustomizable {
 
     /**
      * indicates if the bottom y-label entry is drawn or not
@@ -72,6 +72,18 @@ public class YAxis extends AxisBase {
      * the position of the y-labels relative to the chart
      */
     private YAxisLabelPosition mPosition = YAxisLabelPosition.OUTSIDE_CHART;
+
+    private CustomLabelDrawJob mCustomLabelDrawJob;
+
+    @Override
+    public void setCustomLabelDrawJob(CustomLabelDrawJob drawJob) {
+        mCustomLabelDrawJob = drawJob;
+    }
+
+    @Override
+    public CustomLabelDrawJob getCustomLabelDrawJob() {
+        return mCustomLabelDrawJob;
+    }
 
     /**
      * enum for the position of the y-labels relative to the chart

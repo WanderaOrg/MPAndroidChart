@@ -8,8 +8,8 @@ import android.graphics.Path;
 import android.graphics.RectF;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.CustomLabelDrawJob;
 import com.github.mikephil.charting.components.LimitLine;
-import com.github.mikephil.charting.components.LimitLine.LimitLineCustomDrawJob;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.XAxis.XAxisPosition;
 import com.github.mikephil.charting.utils.FSize;
@@ -278,7 +278,7 @@ public class XAxisRendererHorizontalBarChart extends XAxisRenderer {
 
                 final LimitLine.LimitLabelPosition position = l.getLabelPosition();
 
-                LimitLineCustomDrawJob customDrawJob = l.getCustomLabelDrawJob();
+                CustomLabelDrawJob customLabelDrawJob = l.getCustomLabelDrawJob();
                 float x;
                 float y;
 
@@ -287,8 +287,8 @@ public class XAxisRendererHorizontalBarChart extends XAxisRenderer {
                     mLimitLinePaint.setTextAlign(Align.RIGHT);
                     x = mViewPortHandler.contentRight() - xOffset;
                     y = pts[1] - yOffset + labelLineHeight;
-                    if (customDrawJob != null) {
-                        customDrawJob.drawLimitLineLabel(c, label, x, y, mLimitLinePaint);
+                    if (customLabelDrawJob != null) {
+                        customLabelDrawJob.drawLabel(c, label, x, y, mLimitLinePaint);
                     } else {
                         c.drawText(label, x, y, mLimitLinePaint);
                     }
@@ -298,8 +298,8 @@ public class XAxisRendererHorizontalBarChart extends XAxisRenderer {
                     mLimitLinePaint.setTextAlign(Align.RIGHT);
                     x = mViewPortHandler.contentRight() - xOffset;
                     y = pts[1] + yOffset;
-                    if (customDrawJob != null) {
-                        customDrawJob.drawLimitLineLabel(c, label, x, y, mLimitLinePaint);
+                    if (customLabelDrawJob != null) {
+                        customLabelDrawJob.drawLabel(c, label, x, y, mLimitLinePaint);
                     } else {
                         c.drawText(label, x, y, mLimitLinePaint);
                     }
@@ -309,8 +309,8 @@ public class XAxisRendererHorizontalBarChart extends XAxisRenderer {
                     mLimitLinePaint.setTextAlign(Align.LEFT);
                     x = mViewPortHandler.contentLeft() + xOffset;
                     y = pts[1] - yOffset + labelLineHeight;
-                    if (customDrawJob != null) {
-                        customDrawJob.drawLimitLineLabel(c, label, x, y, mLimitLinePaint);
+                    if (customLabelDrawJob != null) {
+                        customLabelDrawJob.drawLabel(c, label, x, y, mLimitLinePaint);
                     } else {
                         c.drawText(label, x, y, mLimitLinePaint);
                     }
@@ -320,8 +320,8 @@ public class XAxisRendererHorizontalBarChart extends XAxisRenderer {
                     mLimitLinePaint.setTextAlign(Align.LEFT);
                     x = mViewPortHandler.offsetLeft() + xOffset;
                     y = pts[1] + yOffset;
-                    if (customDrawJob != null) {
-                        customDrawJob.drawLimitLineLabel(c, label, x, y, mLimitLinePaint);
+                    if (customLabelDrawJob != null) {
+                        customLabelDrawJob.drawLabel(c, label, x, y, mLimitLinePaint);
                     } else {
                         c.drawText(label, x, y, mLimitLinePaint);
                     }

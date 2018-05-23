@@ -2,9 +2,9 @@ package com.github.mikephil.charting.renderer;
 
 import android.graphics.Canvas;
 import android.graphics.Path;
-import android.graphics.PointF;
 
 import com.github.mikephil.charting.charts.RadarChart;
+import com.github.mikephil.charting.components.CustomLabelDrawJob;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.utils.MPPointF;
@@ -168,8 +168,13 @@ public class YAxisRendererRadarChart extends YAxisRenderer {
             Utils.getPosition(center, r, mChart.getRotationAngle(), pOut);
 
             String label = mYAxis.getFormattedLabel(j);
+            CustomLabelDrawJob customLabelDrawJob = mYAxis.getCustomLabelDrawJob();
 
-            c.drawText(label, pOut.x + 10, pOut.y, mAxisLabelPaint);
+            if (customLabelDrawJob != null) {
+                customLabelDrawJob.drawLabel(c, label, pOut.x + 10, pOut.y, mAxisLabelPaint);
+            } else {
+                c.drawText(label, pOut.x + 10, pOut.y, mAxisLabelPaint);
+            }
         }
         MPPointF.recycleInstance(center);
         MPPointF.recycleInstance(pOut);

@@ -1,7 +1,6 @@
 
 package com.github.mikephil.charting.components;
 
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
@@ -15,7 +14,7 @@ import com.github.mikephil.charting.utils.Utils;
  *
  * @author Philipp Jahoda
  */
-public class LimitLine extends ComponentBase {
+public class LimitLine extends ComponentBase implements DrawingCustomizable {
 
     /** limit / maximum (the y-value or xIndex) */
     private float mLimit = 0f;
@@ -43,7 +42,7 @@ public class LimitLine extends ComponentBase {
         LEFT_TOP, LEFT_BOTTOM, RIGHT_TOP, RIGHT_BOTTOM
     }
 
-    private LimitLineCustomDrawJob mCustomLabelDrawJob;
+    private CustomLabelDrawJob mCustomLabelDrawJob;
 
     /**
      * Constructor with limit.
@@ -65,6 +64,16 @@ public class LimitLine extends ComponentBase {
     public LimitLine(float limit, String label) {
         mLimit = limit;
         mLabel = label;
+    }
+
+    @Override
+    public void setCustomLabelDrawJob(CustomLabelDrawJob drawJob) {
+        mCustomLabelDrawJob = drawJob;
+    }
+
+    @Override
+    public CustomLabelDrawJob getCustomLabelDrawJob() {
+        return mCustomLabelDrawJob;
     }
 
     /**
@@ -213,18 +222,5 @@ public class LimitLine extends ComponentBase {
      */
     public String getLabel() {
         return mLabel;
-    }
-
-    public void setCustomLabelDrawJob(LimitLineCustomDrawJob drawJob) {
-        mCustomLabelDrawJob = drawJob;
-    }
-
-    public LimitLineCustomDrawJob getCustomLabelDrawJob() {
-        return mCustomLabelDrawJob;
-    }
-
-    public abstract static class LimitLineCustomDrawJob {
-
-        public abstract void drawLimitLineLabel(Canvas c, String label, float x, float y, Paint paint);
     }
 }

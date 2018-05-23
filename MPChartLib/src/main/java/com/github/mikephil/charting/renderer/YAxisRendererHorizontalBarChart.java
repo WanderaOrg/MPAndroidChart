@@ -7,8 +7,8 @@ import android.graphics.Paint.Align;
 import android.graphics.Path;
 import android.graphics.RectF;
 
+import com.github.mikephil.charting.components.CustomLabelDrawJob;
 import com.github.mikephil.charting.components.LimitLine;
-import com.github.mikephil.charting.components.LimitLine.LimitLineCustomDrawJob;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.components.YAxis.AxisDependency;
 import com.github.mikephil.charting.components.YAxis.YAxisLabelPosition;
@@ -146,8 +146,13 @@ public class YAxisRendererHorizontalBarChart extends YAxisRenderer {
         for (int i = from; i < to; i++) {
 
             String text = mYAxis.getFormattedLabel(i);
+            CustomLabelDrawJob customLabelDrawJob = mYAxis.getCustomLabelDrawJob();
 
-            c.drawText(text, positions[i * 2], fixedPosition - offset, mAxisLabelPaint);
+            if (customLabelDrawJob != null) {
+                customLabelDrawJob.drawLabel(c, text, positions[i * 2], fixedPosition - offset, mAxisLabelPaint);
+            } else {
+                c.drawText(text, positions[i * 2], fixedPosition - offset, mAxisLabelPaint);
+            }
         }
     }
 
@@ -285,7 +290,7 @@ public class YAxisRendererHorizontalBarChart extends YAxisRenderer {
 
                 final LimitLine.LimitLabelPosition position = l.getLabelPosition();
 
-                LimitLineCustomDrawJob customDrawJob = l.getCustomLabelDrawJob();
+                CustomLabelDrawJob customLabelDrawJob = l.getCustomLabelDrawJob();
                 float x;
                 float y;
 
@@ -295,8 +300,8 @@ public class YAxisRendererHorizontalBarChart extends YAxisRenderer {
                     mLimitLinePaint.setTextAlign(Align.LEFT);
                     x = pts[0] + xOffset;
                     y = mViewPortHandler.contentTop() + yOffset + labelLineHeight;
-                    if (customDrawJob != null) {
-                        customDrawJob.drawLimitLineLabel(c, label, x, y, mLimitLinePaint);
+                    if (customLabelDrawJob != null) {
+                        customLabelDrawJob.drawLabel(c, label, x, y, mLimitLinePaint);
                     } else {
                         c.drawText(label, x, y, mLimitLinePaint);
                     }
@@ -305,8 +310,8 @@ public class YAxisRendererHorizontalBarChart extends YAxisRenderer {
                     mLimitLinePaint.setTextAlign(Align.LEFT);
                     x = pts[0] + xOffset;
                     y = mViewPortHandler.contentBottom() - yOffset;
-                    if (customDrawJob != null) {
-                        customDrawJob.drawLimitLineLabel(c, label, x, y, mLimitLinePaint);
+                    if (customLabelDrawJob != null) {
+                        customLabelDrawJob.drawLabel(c, label, x, y, mLimitLinePaint);
                     } else {
                         c.drawText(label, x, y, mLimitLinePaint);
                     }
@@ -316,8 +321,8 @@ public class YAxisRendererHorizontalBarChart extends YAxisRenderer {
                     mLimitLinePaint.setTextAlign(Align.RIGHT);
                     x = pts[0] - xOffset;
                     y = mViewPortHandler.contentTop() + yOffset + labelLineHeight;
-                    if (customDrawJob != null) {
-                        customDrawJob.drawLimitLineLabel(c, label, x, y, mLimitLinePaint);
+                    if (customLabelDrawJob != null) {
+                        customLabelDrawJob.drawLabel(c, label, x, y, mLimitLinePaint);
                     } else {
                         c.drawText(label, x, y, mLimitLinePaint);
                     }
@@ -326,8 +331,8 @@ public class YAxisRendererHorizontalBarChart extends YAxisRenderer {
                     mLimitLinePaint.setTextAlign(Align.RIGHT);
                     x = pts[0] - xOffset;
                     y = mViewPortHandler.contentBottom() - yOffset;
-                    if (customDrawJob != null) {
-                        customDrawJob.drawLimitLineLabel(c, label, x, y, mLimitLinePaint);
+                    if (customLabelDrawJob != null) {
+                        customLabelDrawJob.drawLabel(c, label, x, y, mLimitLinePaint);
                     } else {
                         c.drawText(label, x, y, mLimitLinePaint);
                     }

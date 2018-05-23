@@ -7,8 +7,8 @@ import android.graphics.Paint.Align;
 import android.graphics.Path;
 import android.graphics.RectF;
 
+import com.github.mikephil.charting.components.CustomLabelDrawJob;
 import com.github.mikephil.charting.components.LimitLine;
-import com.github.mikephil.charting.components.LimitLine.LimitLineCustomDrawJob;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.components.YAxis.AxisDependency;
 import com.github.mikephil.charting.components.YAxis.YAxisLabelPosition;
@@ -124,8 +124,13 @@ public class YAxisRenderer extends AxisRenderer {
         for (int i = from; i < to; i++) {
 
             String text = mYAxis.getFormattedLabel(i);
+            CustomLabelDrawJob customLabelDrawJob = mYAxis.getCustomLabelDrawJob();
 
-            c.drawText(text, fixedPosition, positions[i * 2 + 1] + offset, mAxisLabelPaint);
+            if (customLabelDrawJob != null) {
+                customLabelDrawJob.drawLabel(c, text, fixedPosition, positions[i * 2 + 1] + offset, mAxisLabelPaint);
+            } else {
+                c.drawText(text, fixedPosition, positions[i * 2 + 1] + offset, mAxisLabelPaint);
+            }
         }
     }
 
@@ -315,7 +320,7 @@ public class YAxisRenderer extends AxisRenderer {
 
                 final LimitLine.LimitLabelPosition position = l.getLabelPosition();
 
-                LimitLineCustomDrawJob customDrawJob = l.getCustomLabelDrawJob();
+                CustomLabelDrawJob customLabelDrawJob = l.getCustomLabelDrawJob();
                 float x;
                 float y;
 
@@ -324,8 +329,8 @@ public class YAxisRenderer extends AxisRenderer {
                     mLimitLinePaint.setTextAlign(Align.RIGHT);
                     x = mViewPortHandler.contentRight() - xOffset;
                     y = pts[1] - yOffset + labelLineHeight;
-                    if (customDrawJob != null) {
-                        customDrawJob.drawLimitLineLabel(c, label, x, y, mLimitLinePaint);
+                    if (customLabelDrawJob != null) {
+                        customLabelDrawJob.drawLabel(c, label, x, y, mLimitLinePaint);
                     } else {
                         c.drawText(label, x, y, mLimitLinePaint);
                     }
@@ -334,8 +339,8 @@ public class YAxisRenderer extends AxisRenderer {
                     mLimitLinePaint.setTextAlign(Align.RIGHT);
                     x = mViewPortHandler.contentRight() - xOffset;
                     y = pts[1] + yOffset;
-                    if (customDrawJob != null) {
-                        customDrawJob.drawLimitLineLabel(c, label, x, y, mLimitLinePaint);
+                    if (customLabelDrawJob != null) {
+                        customLabelDrawJob.drawLabel(c, label, x, y, mLimitLinePaint);
                     } else {
                         c.drawText(label, x, y, mLimitLinePaint);
                     }
@@ -344,8 +349,8 @@ public class YAxisRenderer extends AxisRenderer {
                     mLimitLinePaint.setTextAlign(Align.LEFT);
                     x = mViewPortHandler.contentLeft() + xOffset;
                     y = pts[1] - yOffset + labelLineHeight;
-                    if (customDrawJob != null) {
-                        customDrawJob.drawLimitLineLabel(c, label, x, y, mLimitLinePaint);
+                    if (customLabelDrawJob != null) {
+                        customLabelDrawJob.drawLabel(c, label, x, y, mLimitLinePaint);
                     } else {
                         c.drawText(label, x, y, mLimitLinePaint);
                     }
@@ -354,8 +359,8 @@ public class YAxisRenderer extends AxisRenderer {
                     mLimitLinePaint.setTextAlign(Align.LEFT);
                     x = mViewPortHandler.offsetLeft() + xOffset;
                     y = pts[1] + yOffset;
-                    if (customDrawJob != null) {
-                        customDrawJob.drawLimitLineLabel(c, label, x, y, mLimitLinePaint);
+                    if (customLabelDrawJob != null) {
+                        customLabelDrawJob.drawLabel(c, label, x, y, mLimitLinePaint);
                     } else {
                         c.drawText(label, x, y, mLimitLinePaint);
                     }
