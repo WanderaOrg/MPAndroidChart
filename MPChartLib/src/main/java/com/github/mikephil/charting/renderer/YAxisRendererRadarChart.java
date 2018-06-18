@@ -66,7 +66,7 @@ public class YAxisRendererRadarChart extends YAxisRenderer {
             float step = (float) range / (float) (labelCount - 1);
             mAxis.mEntryCount = labelCount;
 
-            if (mAxis.mEntries.length < labelCount) {
+            if (mAxis.mEntries.length != labelCount) {
                 // Ensure stops contains at least numStops elements.
                 mAxis.mEntries = new float[labelCount];
             }
@@ -103,7 +103,7 @@ public class YAxisRendererRadarChart extends YAxisRenderer {
 
             mAxis.mEntryCount = n;
 
-            if (mAxis.mEntries.length < n) {
+            if (mAxis.mEntries.length != n) {
                 // Ensure stops contains at least numStops elements.
                 mAxis.mEntries = new float[n];
             }
@@ -126,7 +126,7 @@ public class YAxisRendererRadarChart extends YAxisRenderer {
 
         if (centeringEnabled) {
 
-            if (mAxis.mCenteredEntries.length < n) {
+            if (mAxis.mCenteredEntries.length != n) {
                 mAxis.mCenteredEntries = new float[n];
             }
 

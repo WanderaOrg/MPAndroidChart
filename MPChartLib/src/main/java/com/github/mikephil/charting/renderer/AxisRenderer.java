@@ -187,7 +187,7 @@ public abstract class AxisRenderer extends Renderer {
             interval = (float) range / (float) (labelCount - 1);
             mAxis.mEntryCount = labelCount;
 
-            if (mAxis.mEntries.length < labelCount) {
+            if (mAxis.mEntries.length != labelCount) {
                 // Ensure stops contains at least numStops elements.
                 mAxis.mEntries = new float[labelCount];
             }
@@ -222,7 +222,7 @@ public abstract class AxisRenderer extends Renderer {
 
             mAxis.mEntryCount = n;
 
-            if (mAxis.mEntries.length < n) {
+            if (mAxis.mEntries.length != n) {
                 // Ensure stops contains at least numStops elements.
                 mAxis.mEntries = new float[n];
             }
@@ -245,7 +245,7 @@ public abstract class AxisRenderer extends Renderer {
 
         if (mAxis.isCenterAxisLabelsEnabled()) {
 
-            if (mAxis.mCenteredEntries.length < n) {
+            if (mAxis.mCenteredEntries.length != n) {
                 mAxis.mCenteredEntries = new float[n];
             }
 

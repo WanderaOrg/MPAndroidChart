@@ -16,7 +16,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 27
         versionCode 3
-        version '3.0.3.5'
+        version '3.0.3.6'
         archivesBaseName = "MPAndroidChart"
     }
     buildTypes {
