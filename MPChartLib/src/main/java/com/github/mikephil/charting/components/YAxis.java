@@ -49,6 +49,11 @@ public class YAxis extends AxisBase implements DrawingCustomizable {
     private boolean mUseAutoScaleRestrictionMax = false;
 
     /**
+     * flag indicating if the 0 on the y Axis should be centered in the middle of the screen of there are no data
+     */
+    private boolean mCenterWhenEmpty = true;
+
+    /**
      * Color of the zero line
      */
     protected int mZeroLineColor = Color.GRAY;
@@ -407,6 +412,22 @@ public class YAxis extends AxisBase implements DrawingCustomizable {
         mUseAutoScaleRestrictionMax = isEnabled;
     }
 
+    /**
+     * Returns true if the 0 of the y axis will be centered in the middle of the graph when there are no data.
+     */
+    public boolean isCenterWhenEmpty() {
+
+        return mCenterWhenEmpty;
+    }
+
+    /**
+     * Sets centering of 0 for y Axis when there are no data as enabled/disabled. Enabled by default.
+     */
+    public void setCenterYWhenEmpty(boolean isEnabled) {
+
+        mCenterWhenEmpty = isEnabled;
+    }
+
 
     @Override
     public void calculate(float dataMin, float dataMax) {
@@ -435,14 +456,16 @@ public class YAxis extends AxisBase implements DrawingCustomizable {
         float range = Math.abs(max - min);
 
         // in case all values are equal
-        if (range == 0f) {
-            max = max + 1f;
-            min = min - 1f;
+        if (mCenterWhenEmpty) {
+            if (range == 0f) {
+                max = max + 1f;
+                min = min - 1f;
+            }
         }
 
         float bottomSpace = range / 100f * getSpaceBottom();
         this.mAxisMinimum = (min - bottomSpace);
-            
+
         float topSpace = range / 100f * getSpaceTop();
         this.mAxisMaximum = (max + topSpace);
 
