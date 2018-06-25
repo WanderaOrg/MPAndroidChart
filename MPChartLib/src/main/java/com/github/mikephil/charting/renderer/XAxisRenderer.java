@@ -26,6 +26,7 @@ public class XAxisRenderer extends AxisRenderer {
     protected XAxis mXAxis;
 
     public XAxisRenderer(ViewPortHandler viewPortHandler, XAxis xAxis, Transformer trans) {
+
         super(viewPortHandler, trans, xAxis);
 
         this.mXAxis = xAxis;
@@ -36,6 +37,7 @@ public class XAxisRenderer extends AxisRenderer {
     }
 
     protected void setupGridPaint() {
+
         mGridPaint.setColor(mXAxis.getGridColor());
         mGridPaint.setStrokeWidth(mXAxis.getGridLineWidth());
         mGridPaint.setPathEffect(mXAxis.getGridDashPathEffect());
@@ -70,6 +72,7 @@ public class XAxisRenderer extends AxisRenderer {
 
     @Override
     protected void computeAxisValues(float min, float max) {
+
         super.computeAxisValues(min, max);
 
         computeSize();
@@ -212,15 +215,22 @@ public class XAxisRenderer extends AxisRenderer {
                     if (i / 2 == mXAxis.mEntryCount - 1 && mXAxis.mEntryCount > 1) {
                         float width = Utils.calcTextWidth(mAxisLabelPaint, label);
 
-                        if (width > mViewPortHandler.offsetRight() * 2
-                                && x + width > mViewPortHandler.getChartWidth())
-                            x -= width / 2;
-
+                        float clipSize = Math.max(
+                                width / 2 - mViewPortHandler.offsetRight(),
+                                width / 2 + x - mViewPortHandler.getChartWidth());
+                        if (clipSize > 0) {
+                            x -= clipSize;
+                        }
                         // avoid clipping of the first
                     } else if (i == 0) {
 
                         float width = Utils.calcTextWidth(mAxisLabelPaint, label);
-                        x += width / 2;
+                        float clipSize = Math.max(
+                                width / 2 - mViewPortHandler.offsetLeft(),
+                                width / 2 - x);
+                        if (clipSize > 0) {
+                            x += clipSize;
+                        }
                     }
                 }
 
@@ -230,6 +240,7 @@ public class XAxisRenderer extends AxisRenderer {
     }
 
     protected void drawLabel(Canvas c, String formattedLabel, float x, float y, MPPointF anchor, float angleDegrees) {
+
         Utils.drawXAxisValue(c, formattedLabel, x, y, mAxisLabelPaint, anchor, angleDegrees);
     }
 
@@ -273,6 +284,7 @@ public class XAxisRenderer extends AxisRenderer {
     protected RectF mGridClippingRect = new RectF();
 
     public RectF getGridClippingRect() {
+
         mGridClippingRect.set(mViewPortHandler.getContentRect());
         mGridClippingRect.inset(-mAxis.getGridLineWidth(), 0.f);
         return mGridClippingRect;
@@ -345,6 +357,7 @@ public class XAxisRenderer extends AxisRenderer {
     private Path mLimitLinePath = new Path();
 
     public void renderLimitLineLine(Canvas c, LimitLine limitLine, float[] position) {
+
         mLimitLineSegmentsBuffer[0] = position[0];
         mLimitLineSegmentsBuffer[1] = mViewPortHandler.contentTop();
         mLimitLineSegmentsBuffer[2] = position[0];
@@ -363,6 +376,7 @@ public class XAxisRenderer extends AxisRenderer {
     }
 
     public void renderLimitLineLabel(Canvas c, LimitLine limitLine, float[] position, float yOffset) {
+
         String label = limitLine.getLabel();
 
         // if drawing the limit-value label is enabled
