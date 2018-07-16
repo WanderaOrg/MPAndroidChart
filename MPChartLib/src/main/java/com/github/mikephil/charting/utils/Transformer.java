@@ -98,7 +98,7 @@ public class Transformer {
     public float[] generateTransformedValuesScatter(IScatterDataSet data, float phaseX,
                                                     float phaseY, int from, int to) {
 
-        final int count = (int) ((to - from) * phaseX + 1) * 2;
+        final int count = data.getEntryCount() < 1 ? 0 : (int) ((to - from) * phaseX + 1) * 2;
 
         if (valuePointsForGenerateTransformedValuesScatter.length != count) {
             valuePointsForGenerateTransformedValuesScatter = new float[count];
@@ -134,7 +134,7 @@ public class Transformer {
      */
     public float[] generateTransformedValuesBubble(IBubbleDataSet data, float phaseY, int from, int to) {
 
-        final int count = (to - from + 1) * 2; // (int) Math.ceil((to - from) * phaseX) * 2;
+        final int count = data.getEntryCount() < 1 ? 0 : (to - from + 1) * 2; // (int) Math.ceil((to - from) * phaseX) * 2;
 
         if (valuePointsForGenerateTransformedValuesBubble.length != count) {
             valuePointsForGenerateTransformedValuesBubble = new float[count];
@@ -172,7 +172,7 @@ public class Transformer {
                                                  float phaseX, float phaseY,
                                                  int min, int max) {
 
-        final int count = ((int) ((max - min) * phaseX) + 1) * 2;
+        final int count = data.getEntryCount() < 1 ? 0 : ((int) ((max - min) * phaseX) + 1) * 2;
 
         if (valuePointsForGenerateTransformedValuesLine.length != count) {
             valuePointsForGenerateTransformedValuesLine = new float[count];
@@ -209,7 +209,7 @@ public class Transformer {
     public float[] generateTransformedValuesCandle(ICandleDataSet data,
                                                    float phaseX, float phaseY, int from, int to) {
 
-        final int count = (int) ((to - from) * phaseX + 1) * 2;
+        final int count = data.getEntryCount() < 1 ? 0 : (int) ((to - from) * phaseX + 1) * 2;
 
         if (valuePointsForGenerateTransformedValuesCandle.length != count) {
             valuePointsForGenerateTransformedValuesCandle = new float[count];
